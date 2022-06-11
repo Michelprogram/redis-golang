@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  api:
+    container_name: api-golang
+    build: .
+    ports:
+      - '8080:8080'
+    environment:
+      - REDIS_URL=redis://default:${PWD_REDIS}@redis-golang:6379/0
+      - MONGO_URL=mongodb://${ID_MONGO}:${PWD_MONGO}@mongo-golang:27017/?authMechanism=SCRAM-SHA-1&authSource=${DB_MONGO}
+  redis:
+    container_name: redis-golang
+    image: redis:alpine3.16
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --requirepass ${PWD_REDIS}
+  mongo:
+    container_name: mongo-golang
+    image: mongo:5.0.8
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${ROOT_MONGO}
+      MONGO_INITDB_ROOT_PASSWORD: ${ROOT_PWD_MONGO}
+      MONGO_INITDB_DATABASE: ${DB_MONGO}
+    volumes:
+      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
