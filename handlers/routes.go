@@ -63,7 +63,7 @@ func StudentsNotRedis(w http.ResponseWriter, r *http.Request) {
 func ErrorRoute() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		var response string = "This API provide GET method for/redis & /notredis url."
+		var response string = "This API provide GET method for /redis & /notredis."
 
 		fmt.Fprintf(w, "%s", response)
 	}

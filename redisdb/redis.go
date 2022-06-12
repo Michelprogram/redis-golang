@@ -9,8 +9,6 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-//var URL string = "redis://default:password@localhost:6379/0"
-
 var URL string = os.Getenv("REDIS_URL")
 var ctx = context.Background()
 

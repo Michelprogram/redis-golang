@@ -3,7 +3,6 @@ package mongodb
 import (
 	"context"
 	"entities"
-	"fmt"
 	"os"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -11,20 +10,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-//- MONGO_URL=mongodb://api_user:api1234@localhost:27017/?authMechanism=DEFAULT&authSource=api_prod_db
-//mongodb://api_user:api1234@localhost:27017/?authMechanism=DEFAULT&authSource=api_prod_db
 var URL string = os.Getenv("MONGO_URL")
 
-//var URL = "mongodb://api_user:api1234@localhost:27017/?authMechanism=SCRAM-SHA-1&authSource=api_prod_db"
+var collectionName string = os.Getenv("COLLECTION_NAME")
+
+var database string = os.Getenv("DB_MONGO")
+
 var ctx context.Context = context.Background()
 
-//var database string = "Redis"
-
-var database string = "api_prod_db"
-
 func getConnexion() (*mongo.Database, error) {
-
-	fmt.Println("Conexion :", URL)
 
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(URL))
 
@@ -38,8 +32,6 @@ func getConnexion() (*mongo.Database, error) {
 func GetStudents() (*[]entities.Students, error) {
 
 	var res []entities.Students
-
-	var collectionName string = "students"
 
 	conn, err := getConnexion()
 

@@ -3,13 +3,12 @@
 set -e
 
 mongo <<EOF
-
+use $DB_MONGO
 db.createUser({
   user: "$ID_MONGO",
   pwd: "$PWD_MONGO",
   roles: [{ role: "readWrite", db: "$DB_MONGO" }],
 });
-
 const data = [
   { nom: "Greta", prenom: "Wenden", age: 1 },
   { nom: "Josey", prenom: "Jacques", age: 2 },
@@ -1013,8 +1012,6 @@ const data = [
   { nom: "Jacquelynn", prenom: "Scholtis", age: 1000 },
   ,
 ];
-
-db.createCollection("students");
+db.createCollection("$COLLECTION_NAME");
 db.students.insertMany(data);
-
 EOF
